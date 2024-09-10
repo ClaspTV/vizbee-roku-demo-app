@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component name="VizbeeWelcomePopover" extends="Group">
+    <interface>
+        <field id="textColor" type="color" alwaysNotify="true" value="0xEAEAEAFF" />
+        <field id="textFont" type="node" alwaysNotify="true" value="font:MediumSystemFont" />
+        <field id="backgroundColor" type="color" alwaysNotify="true" value="0x2B3138E0"/>
+        <field id="backgroundBitmapUri" type="string" alwaysNotify="true" />
+        <field id="minHeight" type="float" value="0" />
+        <field id="height" type="float" value="0" />
+        <field id="minWidth" type="float" value="0" />
+        <field id="maxWidth" type="float" value="0" />
+        <field id="horizAlign" type="string" value="center" />
+        <field id="vertAlign" type="string" value="center" />
+        <field id="padding" type="intarray" value="[10,12,10,12]" />
+        <field id="nodeTranslation" type="floatarray" value="[1380.0,900.0]" />
+        <field id="iconUri" type="string" alwaysNotify="true" />
+        <field id="animationDuration" type="time" value="12" />
+
+        <field id="displayPolicy" type="string" alwaysNotify="true" value="once" />
+
+        <function name="show"/>
+    </interface>
+    <script type="text/brightscript"  uri="./VizbeeWelcomePopover.brs"/>
+
+    <children>
+        <Rectangle id="welcomeNode" opacity="0" visible="false">
+            <Rectangle id="Bg" />
+            <Poster id="BgBmp" visible="false" loadSync="true" />
+            <Group id="ButtonLabel">
+                <Label id="TextNode" translation="[0,15]" ellipsizeOnBoundary="false" />
+                <Poster id="iconImage" translation="[0,15]" width="30" height="30" loadSync="true" />
+            </Group>
+        </Rectangle>
+
+        <Animation id="fadeInAnimation" duration="12" repeat="false" easeFunction="inOutCubic" >
+            <FloatFieldInterpolator id = "fieldInterpolator" key="[0, 1]" keyValue="[0, 1]" fieldToInterp="welcomeNode.opacity" />
+        </Animation>
+    </children>
+</component>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeSDKTask" extends="Task">
+    <script type="text/brightscript" uri="./VizbeeLog.brs"/>
+    <script type="text/brightscript" uri="./VizbeeRRConfigHelper.brs"/>
+    <script type="text/brightscript" uri="./VizbeeRR.brs"/>
+    <script type="text/brightscript" uri="./VizbeeCore.brs"/>
+    <script type="text/brightscript" uri="./VizbeeSDKTask.brs"/>
+    
+    <interface>
+        <field id="sdkInitParams" type="assocarray" />
+        
+        <field id="videoPlayer" type="node" />
+        <field id="shouldMonitorVideoPlayer" type="boolean" alwaysNotify="true"/>
+        <field id="startVideoFailureInfo" type="assocarray" alwaysNotify="true" />
+        <field id="videoStopReasonInfo" type="assocarray" alwaysNotify="true" />
+        
+        <field id="rafCallbackData" type="assocarray" alwaysNotify="true"/>
+        <field id="ssaiAdCallbackData" type="assocarray" alwaysNotify="true"/>
+        
+        <field id="eventInfo" type="assocarray" alwaysNotify="true" />
+        
+        <field id="onHostAppFeatureFlags" type="assocarray" alwaysNotify="true"/>
+
+        <field id="onStartVideo" type="assocarray" alwaysNotify="true"/>
+        <field id="onPauseVideo" type="assocarray" alwaysNotify="true"/>
+        <field id="onPlayVideo" type="assocarray" alwaysNotify="true"/>
+        <field id="onSeekVideo" type="assocarray" alwaysNotify="true"/>
+        <field id="onStopVideo" type="assocarray" alwaysNotify="true"/>
+        <field id="onFinishVideo" type="assocarray" alwaysNotify="true"/>
+
+        <field id="videoInfo" type="assocarray" />
+        <field id="onGetVideoInfo" type="assocarray" alwaysNotify="true"/>
+
+        <field id="onEvent" type="assocarray" alwaysNotify="true"/>
+
+        <field id="metricsEventInfo" type="assocarray" alwaysNotify="true"/>
+    </interface>
+</component>

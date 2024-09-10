@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeRRTask" extends="Task">
+    <script type="text/brightscript" uri="./VizbeeRRConfigHelper.brs"/>
+    <script type="text/brightscript" uri="./VizbeeRR.brs"/>
+    <script type="text/brightscript" uri="./VizbeeRRTask.brs"/>
+    
+    <interface>
+        <!-- Input -->
+        <field id="rrCommand" type="string" />
+
+        <!-- Output -->
+        <field id="onRRCmdResponse" type="boolean" alwaysNotify="true"/>
+    </interface>
+</component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeEventManager" extends="Group">
+    <script type="text/brightscript" uri="./VizbeeLog.brs"/>
+    <script type="text/brightscript" uri="./VizbeeEventManager.brs"/>
+
+    <interface>
+        <field id="eventInfo" type="assocarray" alwaysNotify="true"/>
+        <function name="registerForEvent" />
+        <function name="unregisterForEvent" />     
+        <function name="onEvent" />
+    </interface>
+</component>

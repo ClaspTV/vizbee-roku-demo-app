@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeManager" extends="Group">
+    <script type="text/brightscript" uri="./VizbeeRR.brs" />
+    <script type="text/brightscript" uri="./VizbeeCore.brs" />
+    <script type="text/brightscript" uri="./VizbeeLog.brs"/>
+    <script type="text/brightscript" uri="./VizbeeRRConfigHelper.brs"/>
+    <script type="text/brightscript" uri="./VizbeeManager.brs"/>
+
+    <interface>
+        <!-- Input Field -->
+        <field id="activeVideoNode" type="node" alwaysNotify="true"/>
+        <field id="shouldMonitorVideoNode" type="boolean" alwaysNotify="true"/>
+        <field id="rafCallbackData" type="assocarray" alwaysNotify="true" />
+        <field id="ssaiAdCallbackData" type="assocarray" alwaysNotify="true" />
+        <field id="isSignInInProgress" type="boolean" alwaysNotify="true"/>
+        
+        <function name="initVizbeeSDK" />
+        <function name="getHostAppFeatureFlags" />
+        <function name="sendVideoStopWithReason" />
+
+        <function name="registerForEvent" />
+        <function name="unregisterForEvent" />     
+        <function name="sendEventWithName" />
+        <function name="logMetricsEvent" />  
+        <field id="wasAppLaunchedByVizbee" type="boolean" value="false" alwaysNotify="true"/>
+        <field id="wasVideoStartedByVizbee" type="boolean" value="false" alwaysNotify="true"/>
+    </interface>
+</component>
