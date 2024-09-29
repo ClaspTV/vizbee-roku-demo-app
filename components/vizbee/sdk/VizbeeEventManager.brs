@@ -8,6 +8,7 @@ end sub
 
 function registerForEvent(eventName as string, eventHandler as object) as void
 
+    ? "VizbeeEventHandler::registerForEvent"
     if not m.eventNameAndHandlersMap.DoesExist(eventName) then
         m.eventNameAndHandlersMap[eventName] = []
     end if

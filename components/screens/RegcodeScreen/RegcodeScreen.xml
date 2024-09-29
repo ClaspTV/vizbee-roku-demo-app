@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="RegcodeScreen" extends="Group">
+
+    <interface>
+        <field id="regcode" type="string" alwaysNotify="true"/>
+    </interface>
+
+    <!-- main handler -->
+    <script type="text/brightscript" uri="pkg:/components/screens/RegcodeScreen/RegcodeScreen.brs" />
+
+    <children>
+
+        <MultiStyleLabel
+            id="regcodeLabel"
+            text="Generating Regcode ..."
+            width="600"
+            height="720"
+            maxLines="10"
+            visible="true"
+            translation="[340,0]"
+            vertAlign="center"
+            horizAlign="center"
+            ellipsizeOnBoundary="true"  
+            wrap="true" 
+            color="#FFFFFF"/>
+
+    </children>
+</component>

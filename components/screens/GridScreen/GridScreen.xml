@@ -36,14 +36,15 @@
             
         <RowList
             id="RowList"
+            background="#ffffff"
             focusBitmapUri="pkg:/images/focus_grid.9.png"
-            translation="[-60, 372]"
-            itemSize="[1327, 218]"
+            translation="[64, 372]"
+            itemSize="[1300, 218]"
             numRows="2"
             itemSpacing="[13, 0]"
             focusXOffset="[147]"
             rowFocusAnimationStyle="fixedFocusWrap"
-            rowItemSize="[[262, 147]]"
+            rowItemSize="[[240, 147]]"
             rowItemSpacing="[[16.5, 3]]"
             showRowLabel="true"
             showRowCounter="true"
@@ -57,7 +58,7 @@
 
         <Description 
             id="Description"
-            translation="[106, 119]"
+            translation="[200, 119]"
             itemSpacings="[7,17]"/>
     </children>
 </component>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component name="VizbeeModalManager" extends="Group">
+    <script type="text/brightscript" uri="./VizbeeModalManager.brs"/>
+
+    <interface>
+        <function name="setOptions" />
+        <function name="show" />
+        <function name="hide" />
+    </interface>
+</component>

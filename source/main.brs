@@ -13,9 +13,11 @@ sub RunUserInterface(args)
     m.port = CreateObject("roMessagePort")
     m.screen.SetMessagePort(m.port)
     m.screen.Show()
+    ' vscode_rdb_on_device_component_entry
 
     m.GridScreen = m.scene.findNode("GridScreen")
     m.videoPlayer = m.scene.findNode("videoPlayer")
+    VizbeeClient().startVideoNodeMonitor(m.videoPlayer)
 
     'added handler on item selecting event in grid screen
     m.scene.observeField("rowItemSelected", m.port)
@@ -72,15 +74,10 @@ end sub
 sub OnVideoPlayerStateChange()
     ? "HomeScene > OnVideoPlayerStateChange : state == ";m.videoPlayer.state
 
-    if m.videoPlayer.state = "error"
+    if m.videoPlayer.state = "error" or m.videoPlayer.state = "finished" or m.videoPlayer.state = "stopped"
         'hide vide player in case of error
         m.videoPlayer.visible = false
-        m.GridScreen.visible = true
-        m.GridScreen.setFocus(true)
-    else if m.videoPlayer.state = "playing"
-    else if m.videoPlayer.state = "finished"
-        'hide vide player if video is finished
-        m.videoPlayer.visible = false
+        m.scene.currentViewFocused = Constants().Views.GRID
         m.GridScreen.visible = true
         m.GridScreen.setFocus(true)
     end if
@@ -117,6 +114,7 @@ end sub
 
 sub PlayContentWithoutAds()
     m.GridScreen.visible = false
+    m.scene.currentViewFocused = Constants().Views.VIDEO
     m.videoPlayer.visible = true
     m.videoPlayer.setFocus(true)
     m.videoPlayer.control = "play"

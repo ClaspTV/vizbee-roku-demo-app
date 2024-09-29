@@ -12,7 +12,6 @@
         <field id="shouldMonitorVideoNode" type="boolean" alwaysNotify="true"/>
         <field id="rafCallbackData" type="assocarray" alwaysNotify="true" />
         <field id="ssaiAdCallbackData" type="assocarray" alwaysNotify="true" />
-        <field id="isSignInInProgress" type="boolean" alwaysNotify="true"/>
         
         <function name="initVizbeeSDK" />
         <function name="getHostAppFeatureFlags" />

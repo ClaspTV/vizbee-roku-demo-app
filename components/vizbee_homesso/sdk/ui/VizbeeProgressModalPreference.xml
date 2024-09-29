@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeProgressModalPreference" extends="Node">
+    <interface>
+        <field id="enable" type="boolean" />
+        <field id="options" type="node" />
+    </interface>
+</component>

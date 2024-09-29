@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeSignInModalManager">
+    <script type="text/brightscript" uri="./VizbeeSignInModalManager.brs"/>
+    <script type="text/brightscript" uri="./VizbeeHomeSSOConstants.brs"/>
+    <script type="text/brightscript" uri="./VizbeeHomeSSOLogUtil.brs"/>
+    
+    <interface>
+        <function name="updateSignInStatus" />
+    </interface>
+</component>

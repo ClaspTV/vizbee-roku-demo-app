@@ -21,7 +21,6 @@
 sub init()
 
     m.videoPlayer = invalid
-    m.deferredStartEvent = invalid
     m.playerStateOnSeek = invalid
     m.didPauseAfterSeekCompletion = false
     m.hostAppFeatureFlags = {}
@@ -30,7 +29,6 @@ sub init()
     m.top.observeField("shouldMonitorVideoNode", "setVideoNodeMonitoring")
     m.top.observeField("rafCallbackData", "setRafCallbackData")
     m.top.observeField("ssaiAdCallbackData", "setSSAIAdCallbackData")
-    m.top.observeField("isSignInInProgress", "onSignInStatusChange")
 
     ' create vizbee sdk task
     m.sdkTask = createObject("roSGNode", "VizbeeSDKTask")
@@ -239,12 +237,9 @@ end function
 
 sub onStartVideoDefaultImpl(startEvent as object)
 
-    if m.top.isSignInInProgress = false
-        m.top.wasVideoStartedByVizbee = true
-        startVideo(startEvent)
-    else
-        m.deferredStartEvent = startEvent
-    end if
+    m.top.wasVideoStartedByVizbee = true
+
+    startVideo(startEvent)
 end sub
 
 sub startVideo(startEvent as object)
@@ -534,13 +529,6 @@ sub sendVideoStopWithReason(reason as string, additionalInfo=invalid as dynamic)
         reason: reason 
         additionalInfo: additionalInfo
     }
-end sub
-
-sub onSignInStatusChange()
-    if m.top.isSignInInProgress = false and m.deferredStartEvent <> invalid
-        onStartVideoDefaultImpl(m.deferredStartEvent)
-        m.deferredStartEvent = invalid
-    end if
 end sub
 
 ' -------------

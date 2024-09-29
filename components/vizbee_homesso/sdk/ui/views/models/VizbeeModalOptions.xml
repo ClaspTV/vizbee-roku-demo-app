@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeModalOptions" extends="Group">
+    <interface>
+        <field id="width" type="integer" />
+        <field id="bgColor" type="string" />
+        <field id="borderColor" type="string" />
+        <field id="marginBottom" type="integer" value="" />
+        <field id="marginRight" type="integer" value="" />
+        
+        <field id="iconUrl" type="string" />
+        <field id="iconWidth" type="integer" />
+        <field id="iconHeight" type="integer" />
+        <field id="iconMarginRight" type="integer" />
+        <field id="isProgressIcon" type="boolean" />
+
+        <field id="title" type="string" />
+        <field id="titleTextColor" type="string" />
+        <field id="titleFontUri" type="string" />
+        <field id="titleTextFontSize" type="integer" />
+        
+        <field id="desc" type="string" />
+        <field id="descTextColor" type="string" />
+        <field id="descTextFontSize" type="integer" />
+        <field id="descFontUri" type="string" />
+    </interface>
+</component>

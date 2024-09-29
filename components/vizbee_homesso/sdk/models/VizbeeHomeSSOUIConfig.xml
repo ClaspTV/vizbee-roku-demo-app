@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeHomeSSOUIConfig" extends="Node">
+    <interface>
+        <field id="shouldShowVizbeeModal" type="boolean" />
+        <field id="vizbeeModalOptions" type="assocarray" />
+    </interface>
+</component>

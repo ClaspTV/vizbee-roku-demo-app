@@ -5,22 +5,38 @@
 <component name="HomeScene" extends="Scene">
 
     <interface>
+        <field id="currentViewFocused" type="string" alwaysnotify="true" />
+        
         <!-- Specifies the content for the GridPannel -->
         <field id="gridContent" type="node" alias="GridScreen.content" onChange="OnChangeContent"/>
         <field id="rowItemSelected" type="intarray" alwaysnotify="true" alias="GridScreen.rowItemSelected"/>
 
         <field id="selectedVideoContent" type="node"/>
+        <field id="signInState" type="string" alwaysnotify="true"/>
+        <field id="regcode" type="string" alwaysnotify="true"/>
+        <field id="pollingExited" type="boolean" alwaysnotify="true" value="false"/>
+        <field id="isMobileUserSignedIn" type="boolean"/>
+        
+        <!-- <field id="userInfo" type="assocarray"/> -->
+        <function name="isUserSignedIn" />
+        <function name="updateUserDetails" />
+        <function name="showProfileDialog"/>
+
+        <function name="isVideoPlaying" />
     </interface>
 
     <!-- main handler -->
     <script type="text/brightscript" uri="pkg:/components/screens/HomeScene/HomeScene.brs" />
+    <script type="text/brightscript" uri="pkg:/components/Constants.brs" />
     <script type="text/brightscript" uri="pkg:/components/vizbee/VizbeeClient.brs" />
+    <script type="text/brightscript" uri="pkg:/components/vizbee_homesso/VizbeeHomeSSOClient.brs" />
+    <script type="text/brightscript" uri="pkg:/components/vizbee_homesso/sdk/VizbeeHomeSSOConstants.brs"/>
 
     <children>
 
         <GridScreen
             id="GridScreen"
-            visible="true"
+            visible="false"
             translation="[0,0]" />
 
         <Video
@@ -29,6 +45,11 @@
             translation="[0, 0]"
             width="1280"
             height="720"/>
+
+        <RegcodeScreen
+            id="regcodeScreen"
+            visible="false"
+            translation="[0, 0]" />
 
         <LoadingIndicator
               id="loadingIndicator"
@@ -47,6 +68,11 @@
               font="font:SmallBoldSystemFont"
               backgroundColor="0x551A8B"
               backgroundOpacity="0"/>
+
+        <NavMenu id="menu" />
+
+        <VizbeeWelcomePopover id="vizbeeSigninModal" />
+        <VizbeeModal id="vizbeeModal" />
 
     </children>
 </component>

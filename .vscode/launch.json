@@ -8,8 +8,9 @@
             "name": "BrightScript Debug: Launch",
             "type": "brightscript",
             "request": "launch",
-            "host": "${promptForHost}",
-            "password": "${promptForPassword}",
+            "envFile": "${workspaceFolder}/.env",
+            "host": "${env:ROKU_IP}",
+            "password": "${env:ROKU_PASSWORD}",
             "rootDir": "${workspaceFolder}"
         }
     ]

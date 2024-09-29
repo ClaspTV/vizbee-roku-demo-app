@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeHomeSSOModalConfig" extends="Group">
+    <interface>
+        
+        <!-- Your app's vizbee modal configuraion -->
+        <!--
+            1. width - this is the with of the modal
+            2. bgColor - this is the highlight or accent color used on buttons etc. in your app screens, 
+                            fill this if you want to override secondaryColor from VizbeeHomeSSOTheme.xml
+            3. marginBottom - this is the space given to the modal from right side of the screen
+            4. marginRight - this is the space given to the modal from bottom of the screen
+
+            5. iconWidth - this is the icon width used in all the modals
+            6. iconHeight - this is the icon height used in all the modals
+            7. iconMarginRight - this is the space between icon and text in all the modals
+
+            8. titleTextFontFamily - this is the font family (uri) used for title text in all the modals
+                                        fill this if you want to override primaryFont from VizbeeHomeSSOTheme.xml
+            9. titleTextFontColor - this is the font color used for title text in all the modals
+                                        fill this if you want to override tertiaryColor from VizbeeHomeSSOTheme.xml
+            10. titleTextFontSize - this is the font size for title text in all the modals
+
+            11. descTextFontFamily - this is the font family (uri) used subtext in all the modals
+                                        fill this if you want to override secondaryFont from VizbeeHomeSSOTheme.xml
+            12. descTextFontColor - this is the font color used for subtext in all the modals
+                                        fill this if you want to override tertiaryColor/subTextColor from VizbeeHomeSSOTheme.xml
+            13. descTextFontSize - this is the font size for subtext in all the modals
+        -->
+
+        <!-- Update the modal styles. -->
+        <field id="width" type="integer" value="" />
+        <field id="bgColor" type="string" value="" />
+        <field id="marginBottom" type="integer" value="" />
+        <field id="marginRight" type="integer" value="" />
+
+        <!-- Update the icon details below. -->
+        <field id="iconWidth" type="integer" value="" />
+        <field id="iconHeight" type="integer" value="" />
+        <field id="iconMarginRight" type="integer" value="" />
+
+        <!-- Update the modal title text details below. -->
+        <field id="titleTextFontFamily" type="string" value="" />
+        <field id="titleTextFontColor" type="string" value="" />
+        <field id="titleTextFontSize" type="integer" value="" />
+
+        <!-- Update the modal description text details below. -->
+        <field id="descTextFontFamily" type="string" value="" />
+        <field id="descTextFontColor" type="string" value="" />
+        <field id="descTextFontSize" type="integer" value="" />
+
+    </interface>
+</component>

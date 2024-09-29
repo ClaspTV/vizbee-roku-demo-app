@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="NavMenu" extends="Group">
+    <interface>
+      <field id="config" type="assocarray" onChange="onMainMenuConfig" />
+      <field id="focusHandler" type="string" />
+      <field id="selectHandler" type="string" />
+      <field id="parent" type="node" />
+      <field id="state" type="string" value="collapsed" />
+      <field id="currentIndex" type="integer" value="0" />
+
+      <function name="itemHasFocus" />
+      <function name="handleSelectedMenu" />
+    </interface>
+    <children>
+        <Group id="menu" >
+          <Rectangle id="background"
+            width="160"
+            height="720"
+            color="#000000"
+            opacity="0.1">
+          </Rectangle>
+          <Rectangle id="separator" width="1" height="720" color="0x551A8B" translation="[160, 0]" />
+          <Group id="buttonList">
+            <Rectangle id="background" opacity="0.0" translation="[0, 0]" />
+            <Poster id="poster" translation="[60, 46]" loadDisplayMode="limitSize" />
+            <Poster id="posterSelected" translation="[60, 46]" loadDisplayMode="limitSize" />
+            <Poster id="posterFocused" translation="[60, 46]" loadDisplayMode="limitSize" />
+            <Poster id="active" translation="[160,26]" uri="pkg:/images/active-#res#.png" visible="false"/>
+            <!-- <Poster id="logo" translation="[39, 47]" loadWidth="75" loadHeight="75" loadDisplayMode="limitSize" /> -->
+          </Group>
+        </Group>
+    </children>
+    <script type="text/brightscript" uri="pkg:/components/screens/Menu/NavMenu.brs" />
+    <script type="text/brightscript" uri="pkg:/components/Constants.brs" />
+</component>

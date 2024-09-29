@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeModal">
+    <script type="text/brightscript" uri="VizbeeModal.brs" />
+
+    <interface>
+        <function name="setOptions" />
+        <function name="show" />
+        <function name="hide" />
+    </interface>
+
+    <children>
+        <Rectangle id="vizbeeModalOuterNode" 
+            color="0x00000000"
+            visible="false">
+            <Rectangle id="vizbeeModalInnerNode" 
+                color="0x1E1F21">
+                <Group id="vizbeeModalMainContainer">
+                    <Group id="modalIconContainer">
+                        <Poster id="iconImage" loadSync="true" 
+                            uri="https://static.claspws.tv/images/common/icons/generic/vzb_unconnected.png"/>
+                    </Group>
+                    <Group id="modalTextContainer">
+                        <Label 
+                            id="titleTextNode"
+                            color="0xFFFFFF"
+                            font="font:MediumBoldSystemFont"
+                            lineSpacing="0"
+                            vertAlign="center" />
+                        <Label id="descTextNode"
+                            color="0xFFFFFF"
+                            font="font:SmallSystemFont"
+                            wrap="true"
+                            maxLines="2"
+                            lineSpacing="0"
+                            vertAlign="center" />
+                    </Group>
+                </Group>
+            </Rectangle>
+        </Rectangle>
+
+        <Animation 
+            id = "modalAnimation" 
+            duration = "0.5" 
+            easeFunction = "linear" >
+    
+            <Vector2DFieldInterpolator 
+                id = "fieldInterpolator"
+                key = "[ 0.0, 1.0 ]" 
+                keyValue = "[ [0.0,0.0], [0.0,0.0] ]" 
+                fieldToInterp = "vizbeeModalOuterNode.translation" />
+  
+        </Animation>
+
+        <Timer
+            id="iconImageTimer"
+            repeat="true"
+            duration="0.5"
+        />
+    </children>
+</component>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeHomeSSOTheme" extends="Group">
+    <interface>
+        
+        <!-- Your app's theme colors -->
+        <!--
+            1. primaryColor - this is typically the background color used on most of your app screens
+            2. secondaryColor - this is the highlight or accent color used on buttons etc. in your app screens
+            3. tertiaryColor - this is the text color and icon tint color used in most of your app screens
+            4. subTextColor - this is the text color used for body text, subtitle or description etc in your apps screens
+        -->
+        
+        <!-- Update the colors below to suit your app. -->
+        <field id="primaryColor" type="string" value="0x000000" />
+        <field id="secondaryColor" type="string" value="0x262626" />
+        <field id="tertiaryColor" type="string" value="0xFFFFFF" />
+        <field id="subTextColor" type="string" value="" />
+
+        <!-- Your app's fonts -->
+        <!--
+            1. primaryFont - this is the text font used on most of your app screens
+            2. secondaryFont - this is the text font used for body text, subtitle or description etc in your apps screens
+        -->
+
+        <!-- Update the fonts below to suit your app. -->
+        <field id="primaryFont" type="string" value="" />
+        <field id="secondaryFont" type="string" value="" />
+
+    </interface>
+</component>

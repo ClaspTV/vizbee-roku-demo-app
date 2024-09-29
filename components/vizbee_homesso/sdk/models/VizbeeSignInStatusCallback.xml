@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeSignInStatusCallback" extends="Node">
+    <interface>
+        <field id="progress" type="node" alwaysNotify="true" />
+        <field id="success" type="node" alwaysNotify="true" />
+        <field id="failure" type="node" alwaysNotify="true" />
+    </interface>
+</component>

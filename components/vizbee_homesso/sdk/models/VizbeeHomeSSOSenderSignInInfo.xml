@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeHomeSSOSenderSignInInfo" extends="Node">
+    <interface>
+        <field id="signInType" type="string" />
+        <field id="isSignedIn" type="boolean" />
+        <field id="deviceOS" type="string" />
+        <field id="deviceModel" type="string" />
+        <field id="customData" type="assocarray" />
+    </interface>
+</component>

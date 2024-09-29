@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeSignInStatusManager">
+    <script type="text/brightscript" uri="./VizbeeSignInStatusManager.brs"/>
+    <script type="text/brightscript" uri="./VizbeeHomeSSOConstants.brs"/>
+    <script type="text/brightscript" uri="./VizbeeHomeSSOMetricsUtil.brs"/>
+    <script type="text/brightscript" uri="./VizbeeHomeSSOLogUtil.brs"/>
+    
+    <interface>
+        <field id="senderSignInInfo" type="node" />
+        <function name="onProgress" />
+        <function name="onSuccess" />
+        <function name="onFailure" />
+        <function name="getSignInState" />
+    </interface>
+</component>

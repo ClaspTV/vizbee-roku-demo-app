@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeModalPreferences" extends="Node">
+    <interface>
+        <field id="informationalPreference" type="node" />
+        <field id="progressPreference" type="node" />
+        <field id="successPreference" type="node" />
+    </interface>
+</component>

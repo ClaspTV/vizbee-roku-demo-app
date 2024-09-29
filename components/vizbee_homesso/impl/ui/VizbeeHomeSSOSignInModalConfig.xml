@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeHomeSSOSignInModalConfig" extends="Group">
+    <interface>
+        
+        <!-- Your app's per vizbee modal configuraion -->
+        <!-- Fill the values below to overwrite the styles per modal -->
+
+        <!-- VizbeeHomeSSO.VizbeeInformationSignInModalLayout -->
+        <!-- This modal is shown when the user is not signed in on Mobile app & CTV app in auto signin -->
+        <field id="infoSignInModalWidth" type="integer" value="" />
+        <field id="infoSignInModalBackgroundColor" type="string" value="" />
+        <field id="infoSignInModalMarginBottom" type="integer" value="" />
+        <field id="infoSignInModalMarginRight" type="integer" value="" />
+        
+        <field id="infoSignInModalIconUri" type="string" value="pkg:/components/vizbee_homesso/sdk/ui/assets/vzb_unconnected.png" />
+        <field id="infoSignInModalIconWidth" type="integer" value="" />
+        <field id="infoSignInModalIconHeight" type="integer" value="" />
+        <field id="infoSignInModalIconMarginRight" type="integer" value="" />
+        
+        <field id="infoSignInModalTitleText" type="string" value="Mobile Sign In" />
+        <field id="infoSignInModalTitleTextFontFamily" type="string" value="" />
+        <field id="infoSignInModalTitleTextFontColor" type="string" value="" />
+        <field id="infoSignInModalTitleTextFontSize" type="integer" value="" />
+
+        <field id="infoSignInModalDescText" type="string" value="Please use your mobile app to complete the sign in process." />
+        <field id="infoSignInModalDescTextFontFamily" type="string" value="" />
+        <field id="infoSignInModalDescTextFontColor" type="string" value="" />
+        <field id="infoSignInModalDescTextFontSize" type="integer" value="" />
+
+        <!-- VizbeeHomeSSO.VizbeeProgressSignInModalLayout -->
+        <!-- This modal is shown when the user is signed in on Mobile app & not signed in on CTV app in auto signin -->
+        <field id="progressSignInModalWidth" type="integer" value="" />
+        <field id="progressSignInModalBackgroundColor" type="string" value="" />
+        <field id="progressSignInModalMarginBottom" type="integer" value="" />
+        <field id="progressSignInModalMarginRight" type="integer" value="" />
+        
+        <field id="progressSignInModalIconUri" type="string" value="pkg:/components/vizbee_homesso/sdk/ui/assets/vzb_unconnected.png" />
+        <field id="progressSignInModalIconWidth" type="integer" value="" />
+        <field id="progressSignInModalIconHeight" type="integer" value="" />
+        <field id="progressSignInModalIconMarginRight" type="integer" value="" />
+
+        <field id="progressSignInModalTitleText" type="string" value="" />
+        <field id="progressSignInModalTitleTextFontFamily" type="string" value="" />
+        <field id="progressSignInModalTitleTextFontColor" type="string" value="" />
+        <field id="progressSignInModalTitleTextFontSize" type="integer" value="" />
+
+        <field id="progressSignInModalDescText" type="string" value="Signing in using your mobile app ..." />
+        <field id="progressSignInModalDescTextFontFamily" type="string" value="" />
+        <field id="progressSignInModalDescTextFontColor" type="string" value="" />
+        <field id="progressSignInModalDescTextFontSize" type="integer" value="" />
+
+        <!-- VizbeeHomeSSO.VizbeeSuccessSignInModalLayout -->
+        <!-- This modal is shown when the user is successfully signed in on CTV app in auto signin -->
+        <field id="successSignInModalWidth" type="integer" value="" />
+        <field id="successSignInModalBackgroundColor" type="string" value="" />
+        <field id="successSignInModalMarginBottom" type="integer" value="" />
+        <field id="successSignInModalMarginRight" type="integer" value="" />
+        
+        <field id="successSignInModalIconUri" type="string" value="pkg:/components/vizbee_homesso/sdk/ui/assets/vzb_connected.png" />
+        <field id="successSignInModalIconWidth" type="integer" value="" />
+        <field id="successSignInModalIconHeight" type="integer" value="" />
+        <field id="successSignInModalIconMarginRight" type="integer" value="" />
+
+        <field id="successSignInModalTitleText" type="string" value="Mobile Sign In Successful!" />
+        <field id="successSignInModalTitleTextFontFamily" type="string" value="" />
+        <field id="successSignInModalTitleTextFontColor" type="string" value="" />
+        <field id="successSignInModalTitleTextFontSize" type="integer" value="" />
+
+        <field id="successSignInModalDescText" type="string" value="Cast or select any content to start watching." />
+        <field id="successSignInModalDescTextFontFamily" type="string" value="" />
+        <field id="successSignInModalDescTextFontColor" type="string" value="" />
+        <field id="successSignInModalDescTextFontSize" type="integer" value="" />
+
+    </interface>
+</component>

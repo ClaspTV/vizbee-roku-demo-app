@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MenuItem" extends="Group">
+    <interface>
+        <field id="itemContent" type="assocarray" onChange="onContent"/>
+        <field id="menuHasFocus" type="boolean" onChange="onMenuHasFocus" alwaysNotify="true" />
+        <field id="itemHasFocus" type="boolean" onChange="onItemHasFocus" alwaysNotify="true" />
+        <field id="itemIsSelected" type="boolean" onChange="onItemSelected" alwaysNotify="true" />
+        <!-- <field id="focusPercent" type="float" onChange="onFocusPercent" alwaysNotify="true" /> -->
+    
+        <field id="width" type="Integer" onChange="onWidth" />
+        <field id="height" type="Integer" onChange="onHeight" />
+        <field id="color" type="string" onChange="onColor" />
+        <field id="colorFocused" type="string" />
+        <field id="colorSelected" type="string" />
+        <field id="imageUri" type="string" onChange="onImageUri" />
+        <field id="imageWidth" type="Integer" onChange="onImageWidth" />
+        <field id="imageHeight" type="Integer" onChange="onImageHeight" />
+        <field id="imageTranslation" type="array" onChange="onImageTranslation" alwaysNotify="true"/>
+        <field id="imageFocused" type="string"/>
+        <field id="imageSelected" type="string"/>
+        <field id="textColor" type="string" />
+        <field id="textColorFocused" type="string" />
+        <field id="textColorSelected" type="string" />
+        <field id="text" type="string" />
+        <field id="font" type="string" />
+        <function name="resetMenuIcon" />
+    </interface>
+    <children>
+        <Rectangle id="background" opacity="0.0" translation="[0, 0]" />
+        <Rectangle id="backgroundSelected" opacity="1.0" translation="[154, 5]" color="#61D2DF" width="4" height="50"/>
+        <Poster id="poster" translation="[0, 0]" loadDisplayMode="limitSize" />
+        <Poster id="posterSelected" translation="[60, 46]" loadDisplayMode="limitSize" />
+        <Poster id="posterFocused" translation="[60, 46]" loadDisplayMode="limitSize" />
+        <Label id="label" color="0xFFFFFF" translation="[0,0]" />
+        <Poster id="active" translation="[160,26]" uri="pkg:/images/active-#res#.png" visible="false"/>
+
+        <Animation   id="expandItemAnimation"  duration="0.15"  easeFunction="linear" >
+            <FloatFieldInterpolator    id="expandLabels"   key="[0.0, 1.0]"    keyValue="[0.0 , 1.0]" fieldToInterp="label.opacity"   />
+        </Animation>
+        <Animation   id="collapseItemAnimation"  duration="0.15"  easeFunction="linear" >
+            <FloatFieldInterpolator    id="collapseLabels"   key="[0.0, 1.0]"    keyValue="[1.0, 0.0]" fieldToInterp="label.opacity"   />
+        </Animation>
+    </children>
+    <script type="text/brightscript" uri="pkg:/components/screens/Menu//MenuItem.brs" />
+</component>

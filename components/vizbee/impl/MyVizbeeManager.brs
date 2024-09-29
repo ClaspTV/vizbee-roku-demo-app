@@ -14,6 +14,19 @@
 ' 6. 'onEvent' is an optional method.
 ' *******************************************************************
 
+sub init()
+    m.scene = m.top.getScene()
+    m.scene.observeField("signInState", "onSignInStateChange")
+
+    m.isSignInInProgress = false
+    m.isFirstDeeplinkVideo = true
+    m.deferredVideoInfo = invalid
+    m.deeplinkDelayTimer = invalid
+    m.deferredStopVideo = invalid
+
+    m.homeScene = m.top.getScene()
+end sub
+
 '-----------------------------------------------------------
 ' Implement these mobile-to-roku APIs as needed.
 ' Only 'startVideo' API is mandatory, rest are optional.
@@ -40,6 +53,46 @@ sub startVideo(event as object)
 
     videoInfo = event.getData()
     vizbee_log("INFO", "MyVizbeeManager::startVideo - Deeplinking to start video: " + FormatJson(videoInfo))
+
+    if m.isSignInInProgress = true then
+        vizbee_log("INFO", "MyVizbeeManager::startVideo - holding deeplink as sign in is in progress")
+        m.deferredVideoInfo = event
+        if m.homeScene.isMobileUserSignedIn = false then
+            m.global.VZBManager.callFunc("sendVideoStopWithReason", "Sign-in in progress")
+        end if
+        return
+    end if
+
+    if videoInfo.guid = "sintel" and m.homeScene.callFunc("isUserSignedIn") <> true then
+        vizbee_log("INFO", "MyVizbeeManager::startVideo - holding deeplink as this is authenticated stream and is not signed in yet. Initiating sign in flow.")
+        m.deferredVideoInfo = event
+        signInEvent = {
+            "type": "tv.vizbee.homesso.signin",
+            "data": {
+                "sub_type":"start_sign_in",
+                "sinfo": {
+                    "is_signed_in": true,
+                    "stype" : "MVPD",
+                    "device_model" : "iPhone 11",
+                    "device_os"    : "iOS"
+                    "custom_data"  : {}
+                }
+            }
+        }
+        m.global.VZBHomeSSOManager.callFunc("onEvent", signInEvent)
+        return
+    end if
+
+    if m.isFirstDeeplinkVideo = true then
+        vizbee_log("INFO", "MyVizbeeManager::startVideo - this is the first video deeplinked, starting a timer to avoid sign in issues")
+        m.isFirstDeeplinkVideo = false
+        m.deferredVideoInfo = event
+        m.deeplinkDelayTimer = m.top.createChild("Timer")
+        m.deeplinkDelayTimer.ObserveField("fire", "onDeeplinkDelayTimerFired")
+        m.deeplinkDelayTimer.duration = 4
+        m.deeplinkDelayTimer.control = "start"
+        return
+    end if
 
     item = getItemByGUID(videoinfo.guid, m.global.playlist)
     if (invalid <> item) then
@@ -71,6 +124,7 @@ sub startVideo(event as object)
         m.global.scene.selectedVideoContent = nodeitem
     end if
 
+    m.deferredVideoInfo = invalid
 end sub
 
 ' @function seekVideo
@@ -118,12 +172,22 @@ end sub
 ' the Vizbee SDK implicitly sent a stop because the user switched the video.
 ' NOTE: You can ignore stopReason unless you want to create custom UI experiences while switching videos.
 
-' sub stopVideo(stopEvent as object)
+sub stopVideo(stopEvent as object)
 
-'     stopParams = stopEvent.getData()
-'     print "MyVizbeeManager::stopVideo"
-'     ' Implement your stop video here
-' end sub
+    stopParams = stopEvent.getData()
+    print "MyVizbeeManager::stopVideo"
+
+    ' Implement your stop video here
+    if m.isSignInInProgress = true then
+        vizbee_log("INFO", "MyVizbeeManager::stopVideo - holding stop video as sign in is in progress")
+        m.deferredStopVideo = stopEvent
+        return
+    else
+        vizbee_log("INFO", "MyVizbeeManager::stopVideo - invoking deferred stop video")
+        m.deferredStopVideo = invalid
+        stopVideoDefaultImpl()
+    end if
+end sub
 
 '-----------------------------------------------------------
 ' Implement this roku-to-mobile API if needed.
@@ -186,4 +250,42 @@ function getItemByGUID(guid, playlist)
         end if
     end for
 
+end function
+
+function onSignInStateChange(signInStateChangeEvent as object)
+
+    signInState = signInStateChangeEvent.getData()
+    ? "MyVizbeeManager::signInStateChangeEvent - signInState: "; signInState
+
+    if (signInState = VizbeeHomeSSOConstants().VizbeeSignInState.SIGN_IN_COMPLETED or signInState = VizbeeHomeSSOConstants().VizbeeSignInState.SIGN_IN_FAILED or signInState = VizbeeHomeSSOConstants().VizbeeSignInState.SIGN_IN_CANCELLED) then
+        vizbee_log("INFO", "MyVizbeeManager::signInStateChangeEvent - sign in completed/failed")
+        m.isSignInInProgress = false
+
+        ' handle deferred stop video
+        if m.deferredStopVideo <> invalid then
+            vizbee_log("INFO", "MyVizbeeManager::signInStateChangeEvent - initiating deferred stop video")
+            stopVideo(m.deferredStopVideo)
+        end if
+
+        ' handle deferred deeplink
+        if m.deferredVideoInfo <> invalid then
+            vizbee_log("INFO", "MyVizbeeManager::signInStateChangeEvent - initiating deferred deeplink")
+            if m.deeplinkDelayTimer <> invalid then
+                m.deeplinkDelayTimer.control = "stop"
+            end if
+            startVideo(m.deferredVideoInfo)
+        end if
+    else
+        vizbee_log("VERB", "MyVizbeeManager::signInStateChangeEvent - sign in in progress")
+        m.isSignInInProgress = true
+    end if
+end function
+
+function onDeeplinkDelayTimerFired() as void
+    m.global.scene.selectedVideoContent = invalid
+    if m.deeplinkDelayTimer <> invalid then
+        m.deeplinkDelayTimer.control = "stop"
+    end if
+    vizbee_log("INFO", "MyVizbeeManager::startVideo - sign in progress timer finished, releasing deeplink that was help")
+    startVideo(m.deferredVideoInfo)
 end function

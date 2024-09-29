@@ -6,6 +6,7 @@ rm Vizbee-Roku-Demo-SceneGraph-App
 
 echo packing sources
 zip -r Vizbee-Roku-Demo-SceneGraph-App "images"
+zip -r Vizbee-Roku-Demo-SceneGraph-App "fonts"
 zip -r Vizbee-Roku-Demo-SceneGraph-App "manifest"
 zip -r Vizbee-Roku-Demo-SceneGraph-App "source"
 zip -r Vizbee-Roku-Demo-SceneGraph-App "components"

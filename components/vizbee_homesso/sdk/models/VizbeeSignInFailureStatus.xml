@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeSignInFailureStatus" extends="Node">
+    <interface>
+        <field id="sType" type="string" />
+        <field id="reason" type="string" />
+        <field id="isCancelled" type="boolean" />
+        <field id="exception" type="assocarray" />
+        <field id="cData" type="assocarray" />
+    </interface>
+</component>

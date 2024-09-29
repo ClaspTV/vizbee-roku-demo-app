@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="VizbeeHomeSSOSignInAdapter">
+    <script type="text/brightscript" uri="./VizbeeHomeSSOSignInAdapter.brs"/>
+    <script type="text/brightscript" uri="./../sdk/VizbeeHomeSSOConstants.brs"/>
+    <script type="text/brightscript" uri="./../sdk/VizbeeHomeSSOLogUtil.brs"/>
+
+    <interface>
+        <function name="onStartSignIn" />
+        <function name="isSignedIn" />
+
+        <function name="setSignInSuccessModalTitle" />
+        <function name="getSignInSuccessModalTitle" />
+
+        <function name="setSignInSuccessModalDesc" />
+        <function name="getSignInSuccessModalDesc" />
+
+        <function name="setSignInProgressModalTitle" />
+        <function name="getSignInProgressModalTitle"/>
+
+        <function name="setSignInProgressModalDesc" />
+        <function name="getSignInProgressModalDesc" />
+
+        <function name="setSignInInformationalModalTitle" />
+        <function name="getSignInInformationalModalTitle" />
+        
+        <function name="setSignInInformationalModalDesc" />
+        <function name="getSignInInformationalModalDesc" />
+    </interface>
+
+    <children>
+        <Timer
+            id="pollingSignInStatusTimer"
+            repeat="true"
+            duration="2"/>
+    </children>
+</component>

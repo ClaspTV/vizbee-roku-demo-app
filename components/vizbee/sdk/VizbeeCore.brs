@@ -578,7 +578,7 @@ error = error OR (response.data.items = invalid) OR (response.data.items[0] = in
 error = error OR (response.error <> invalid)
 error = error OR (response.data.items[0].channelKeys = invalid) OR (response.data.items[0].channelKeys.pub_key = invalid) OR (response.data.items[0].channelKeys.sub_key = invalid)
 if (error AND (response <> invalid) AND (response.error <> invalid))
-vizbee_util().storeClear("config", vizbee_constants().REGISTRY_SECTION.CONFIG)
+vizbee_util().storeClear("config")
 vizbee_log("PROD", "Config disabled. Stopping initialization." + response.error.message)
 return invalid
 end if
@@ -590,7 +590,7 @@ appconfig = response.data.items[0]
 if (response.externalIpAddress <> invalid)
 appconfig.externalIpAddress = response.externalIpAddress
 end if
-vizbee_util().storeSet("config", FormatJson(appconfig), vizbee_constants().REGISTRY_SECTION.CONFIG)
+vizbee_util().storeSet("config", FormatJson(appconfig))
 vizbee_log("INFO", "Saving config", appconfig)
 return appconfig
 end function
@@ -641,7 +641,7 @@ return url
 end function
 function vizbee_config_add_sdk_version(config) as Dynamic
 if (config = invalid) then return invalid
-config.sdkVersion = "4.5.9"
+config.sdkVersion = "4.5.5"
 return config
 end function
 function vizbee_config_add_app_info(config) as Dynamic
@@ -724,18 +724,6 @@ apideviceconfig = m.AddDeviceInfo(appinfoconfig)
 apisyncconfig = m.EnrichSyncInfo(apideviceconfig)
 m.Activate(apisyncconfig)
 return apisyncconfig
-end function
-'********************************************************************
-'**  Vizbee Constants
-'********************************************************************
-function vizbee_constants()
-this = {
-REGISTRY_SECTION: {
-CONFIG: "VizbeeConfig"
-IDS: "VizbeeIds"
-}
-}
-return this
 end function
 '********************************************************************
 '**  Vizbee Elapsed Playtime Tracker
@@ -1009,6 +997,7 @@ setCommonProperties : vizbee_metrics_set_common_properties
 getRemoteCustomAttributes : vizbee_metrics_get_remote_custom_attributes
 addRemoteCustomAttributes : vizbee_metrics_add_remote_custom_attributes
 shouldSend : vizbee_metrics_should_send
+currentSessionId : ""
 config : globalconfig
 options : globaloptions
 router : vizbee_metrics_router()
@@ -1021,8 +1010,8 @@ message = {}
 message.properties = {}
 configProperties = m.config.properties
 deviceId = vizbee_metrics_get_device_id(configProperties)
-screenSdkId = vizbee_metrics_get_screen_sdk_id()
 messageProperties = {
+SCREEN_NETWORK_SESSION_ID: m.currentSessionId
 distinct_id: deviceId
 SCREEN_DEVICE_ID: deviceId
 APP_ID: configProperties.appID
@@ -1038,7 +1027,6 @@ SCREEN_IDFA: configProperties.adID
 SCREEN_LIMIT_AD_TRACKING: configProperties.limitAdTracking
 SCREEN_MAC_ADDRESS: configProperties.macAddress
 SCREEN_SERIAL_NUMBER: configProperties.serialNumber
-SCREEN_SDK_ID: screenSdkId
 WIFI_SSID: configProperties.ssid
 EXTERNAL_IP_ADDRESS: configProperties.externalIpAddress
 INTERNAL_IP_ADDRESS: configProperties.internalIpAddress
@@ -1115,15 +1103,6 @@ deviceId += ("idfv:" + LCase(configProperties.idfv))
 end if
 return deviceId
 end function
-function vizbee_metrics_get_screen_sdk_id() as string
-screenSdkId = vizbee_util().storeGet("screenSdkId", vizbee_constants().REGISTRY_SECTION.IDS)
-if(screenSdkId = invalid)
-di = CreateObject("roDeviceInfo")
-screenSdkId = di.GetRandomUUID()
-vizbee_util().storeSet("screenSdkId", screenSdkId, vizbee_constants().REGISTRY_SECTION.IDS)
-end if
-return screenSdkId
-end function
 function vizbee_metrics_should_send(message) as boolean
 shouldSend = true
 if (m.config <> invalid) and (m.config.properties <> invalid) and (m.config.properties.metricsParams <> invalid) then
@@ -1140,6 +1119,8 @@ message = m.setCommonProperties()
 if (message = invalid)
 return false
 end if
+m.currentSessionId = Rnd(1000000000).ToStr() + "_" + vizbee_metrics_utils().getCurrentTimestamp()
+message.properties.SCREEN_NETWORK_SESSION_ID = m.currentSessionId
 message.event = "SCREEN_LAUNCHED"
 ret = m.router.send(message)
 return ret
@@ -1856,14 +1837,10 @@ vip  : "false"
 }
 if (m.state.session = "VIDEO") OR (m.state.session = "AD")
 state = m.state.GetState()
-if (state <> invalid)
-if (state.vstatus <> invalid) AND (state.vstatus.st <> "LOADING")
 status.hstatus.vip = "true"
 status.vinfo = state.vinfo
 status.vinfoext = state.vinfoext
 status.vstatus = state.vstatus
-end if
-end if
 end if
 m.comm.SendMsg(m.Message({
 ns   : "video"
@@ -2105,7 +2082,7 @@ eventName = eventInfo.eventName
 if eventName = invalid or eventName = "" then return false
 eventData = eventInfo.eventData
 if eventData = invalid then return false
-vizbee_log("VERB", "HandleOnEvent - Sending event to mobile")
+? "VizbeeSyncController::vizbee_sync_handle_on_event - Sending event to mobile: "; eventInfo
 m.comm.SendMsg(m.Message({
 ns   : "video"
 name : "event"
@@ -2260,10 +2237,9 @@ if eventInfo <> invalid AND eventInfo.type <> invalid AND eventInfo.data <> inva
 eventType = LCase(eventInfo.type)
 if eventType = "tv.vizbee.homesign.signin"
 ret = VZB().metrics.trackScreenSignIn(eventInfo.data.authInfo)
-end if
 if header <> invalid and header.ssinfo <> invalid then
-senderInfo = vizbee_sync_parse_sender_info_from_sender_session_info(header.ssinfo)
-eventInfo.append({senderInfo: senderInfo})
+eventInfo.data.append({ssinfo: header.ssinfo})
+end if
 end if
 end if
 success = m.appProxy.OnEvent(eventInfo)
@@ -2296,18 +2272,6 @@ body[key] = objects[key]
 next
 end if
 return body
-end function
-function vizbee_sync_parse_sender_info_from_sender_session_info(senderSessionInfo as object) as object
-senderInfo = {}
-if senderSessionInfo <> invalid
-senderInfo = {
-"deviceId": senderSessionInfo.REMOTE_DEVICE_ID
-"deviceType": senderSessionInfo.REMOTE_DEVICE_TYPE
-"friendlyName": senderSessionInfo.REMOTE_FRIENDLY_NAME
-"sessionId": senderSessionInfo.REMOTE_NETWORK_SESSION_ID
-}
-end if
-return senderInfo
 end function
 function vizbee_sync_state_manager()
 return {
@@ -2910,23 +2874,23 @@ end if
 vizbee_log("INFO", "rrPost: " + Stri(timer.TotalMilliseconds()) + "ms")
 return response
 end function
-util.storeGet = function(key as String, vizbeeRegistrySection as String) as Dynamic
-reg = CreateObject("roRegistrySection", vizbeeRegistrySection)
+util.storeGet = function(key as String) as Dynamic
+reg = CreateObject("roRegistrySection", "VizbeeConfig")
 if reg.Exists(key) then return reg.Read(key)
 return invalid
 end function
-util.storeSet = function(key as String, value as String, vizbeeRegistrySection as String)
-reg = CreateObject("roRegistrySection", vizbeeRegistrySection)
+util.storeSet = function(key as String, value as String)
+reg = CreateObject("roRegistrySection", "VizbeeConfig")
 reg.Write(key, value)
 reg.Flush()
 end function
-util.storeClear = function(key as String, vizbeeRegistrySection as String)
-reg = CreateObject("roRegistrySection", vizbeeRegistrySection)
+util.storeClear = function(key as String)
+reg = CreateObject("roRegistrySection", "VizbeeConfig")
 reg.Delete(key)
 reg.Flush()
 end function
 util.configGet = function() as Dynamic
-config = m.storeGet("config", vizbee_constants().REGISTRY_SECTION.CONFIG)
+config = m.storeGet("config")
 if (config <> invalid) then config = ParseJson(config)
 if (config = invalid)
 vizbee_log("PROD", "R:002 empty or invalid config from store")
